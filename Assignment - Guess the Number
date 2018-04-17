@@ -1,0 +1,30 @@
+
+// Assignment No. 1: GAME - Guess the Number.
+
+import java.util.Random
+fun main(args: Array<String>)
+{
+    var loopchk=0
+        while (loopchk==0){
+            for (i in 1..3) {
+               if (theGame()) {
+                   println("Great, Correct Guess!!")
+                   break
+               }
+                else
+                   println("Not Matched, You have only ${3 - i}  choice(s) left.")
+            }
+            println("Do you want to play another round: Press Y | To Exit: Press any key")
+            loopchk = if ((readLine()=="y") || (readLine()=="Y")) 0 else 1
+        }
+}
+
+fun Guesser(random: Random): Int=random.nextInt( 50)
+
+fun checker(a:Int,res: Int)= if (a==res) true else false
+
+fun theGame(): Boolean {
+    var guessedNo = Guesser(Random())
+    println("Please Guess Number (1 to 50) - Computer Generated No. is ${guessedNo}: ")
+    return checker(readLine()!!.toInt(),guessedNo)
+}
