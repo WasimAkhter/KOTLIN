@@ -15,7 +15,7 @@ fun main(args: Array<String>)
                    println("Not Matched, You have only ${3 - i}  choice(s) left.")
             }
             println("Do you want to play another round: Press Y | To Exit: Press any key")
-            loopchk = if ((readLine()=="y") || (readLine()=="Y")) 0 else 1
+            loopchk = if (readLine()=="y")  0 else 1
         }
 }
 
