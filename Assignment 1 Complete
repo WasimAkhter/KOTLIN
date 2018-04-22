@@ -1,0 +1,47 @@
+// Assignment No. 1: GAME - Guess the Number - Complete
+
+import java.util.Random    // class import for random number generation
+fun main(args: Array<String>)   // starting point which must takes an argument and returns unit = void
+{
+    var loopchk=0        // var. declare for continous looping till the value of var. not change
+    var ch=3             // User input chances
+    while (loopchk==0){    // loop starts with the condition : keep on running till 0
+        var guessedNo = Guesser(Random())     // var. declare then assigned a function to it which accepts a class random
+        for (i in 1..ch) {     // loop only runs 3 times -- 3 attempts
+            if (theGame(guessedNo)) {    // function which accepts a computer generated random no and returns true if it truly guessed by the user
+                println("Great, Correct Guess!!")   //function to print
+                break  // used to break for loop
+            }
+            else {
+                when(ch){
+                     0 -> println("Not Matched, Try Next Time.") // If not matched and chances are finished.
+                    else -> println("Not Matched, You have only ${ch - i}  chance(s) left.") // instructions if not matched.
+                }
+            }
+        }
+        println("Do you want to play another round: Press Y (in Upper Case) | To Exit: Press any key") // instructions
+        loopchk = if (readLine()=="Y")  0 else 1 // loop validation checking
+    }
+}
+
+fun Guesser(random: Random): Int=random.nextInt( 50)   // Function: used  to guess the number
+fun checker(a:Int,res: Int)= if (a==res) true else false  // Function: used to check the user input = guessedNo and retruns true / false
+fun userInput(guessedNo: Int): Int {
+    var userInputs = 0  // user input variable
+    var loop = 1  // loop validator
+    while (loop != 0)  // Loop until the correct format of input is not received.
+    {
+        try {
+            println("Please Guess Number (1 to 50) - Computer Generated No. is $guessedNo") // Instructions to take input
+            userInputs = readLine()!!.toInt() // takes input
+            loop=0 // Exit loop
+        } catch (e: Exception) { // Catches Exceptions
+            println("Please Enter Numeric(1 ot 50) Numbers!!") // Show instruction to upply correct form of input.
+            loop=1 // continue loop
+        }
+}
+    return userInputs  // returns user input
+}
+fun theGame(guessedNo: Int): Boolean {  // Function which takes arguments Guess no and returns Bool value which determines its guessed or not
+    return checker(userInput(guessedNo),guessedNo) // input and guessedNo passed to the fun which return ture if matched or false if not. Then Boolean value is returned.
+}
