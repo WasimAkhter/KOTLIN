@@ -7,18 +7,14 @@ fun main(args: Array<String>)   // starting point which must takes an argument a
     var ch=3             // User input chances
     while (loopchk==0){    // loop starts with the condition : keep on running till 0
         var guessedNo = Guesser(Random())     // var. declare then assigned a function to it which accepts a class random
-        for (i in 1..ch) {     // loop only runs 3 times -- 3 attempts
-            if (theGame(guessedNo)) {    // function which accepts a computer generated random no and returns true if it truly guessed by the user
+        // loop only runs 3 times -- 3 attempts
+        for (i in 1..ch) if (theGame(guessedNo)) {    // function which accepts a computer generated random no and returns true if it truly guessed by the user
                 println("Great, Correct Guess!!")   //function to print
                 break  // used to break for loop
-            }
-            else {
-                when(ch){
-                     0 -> println("Not Matched, Try Next Time.") // If not matched and chances are finished.
-                    else -> println("Not Matched, You have only ${ch - i}  chance(s) left.") // instructions if not matched.
-                }
-            }
-        }
+            } else when(ch){
+                        0 -> println("Not Matched, Try Next Time.") // If not matched and chances are finished.
+                        else -> println("Not Matched, You have only ${ch - i}  chance(s) left.") // instructions if not matched.
+                    }
         println("Do you want to play another round: Press Y (in Upper Case) | To Exit: Press any key") // instructions
         loopchk = if (readLine()=="Y")  0 else 1 // loop validation checking
     }
@@ -42,6 +38,7 @@ fun userInput(guessedNo: Int): Int {
 }
     return userInputs  // returns user input
 }
-fun theGame(guessedNo: Int): Boolean {  // Function which takes arguments Guess no and returns Bool value which determines its guessed or not
-    return checker(userInput(guessedNo),guessedNo) // input and guessedNo passed to the fun which return ture if matched or false if not. Then Boolean value is returned.
-}
+fun theGame(guessedNo: Int): Boolean = // Function which takes arguments Guess no and returns Bool value which determines its guessed or not
+        checker(userInput(guessedNo),guessedNo) // input and guessedNo passed to the fun which return ture if matched or false if not. Then Boolean value is returned.
+
+
