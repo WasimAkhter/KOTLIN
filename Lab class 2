@@ -1,0 +1,82 @@
+fun main (args : Array<String>){
+
+
+    val dbl:Double =1245.345
+    val Lng:Long=123456
+    val in_t:Int=23
+    val shrt:Short=2
+    val byt:Byte=8
+    val chr:Char='A'
+    val Bol:Boolean = true
+
+    var ani: Any
+
+var str:String = ""
+
+
+   // TASK 1
+
+    println("\nTASK 1")
+    println("-------------\n")
+
+    println(dbl)
+    println(Lng)
+    println(in_t)
+    println(shrt)
+    println(byt)
+    println(chr)
+    println(Bol)
+
+
+    // TASK 2 & 3
+
+    println("\nTASK 2 & 3")
+    println("-------------\n")
+
+    str=dbl.toString()
+    println("$str - Double change to string")
+
+    str=Lng.toString()
+    println("$str - Long change to String")
+
+    str=in_t.toString()
+    println ("$str - Integer to String")
+
+    str=shrt.toString()
+    println ("$str - Short to String")
+
+    str=byt.toString()
+    println ("$str - Byte to String")
+
+    str=Bol.toString()
+    println ("$str - Char to String")
+
+    // Task 4
+
+    println("\nTASK 4")
+    println("-------------\n")
+
+    ani='S'
+
+    when (ani ){
+        is Int -> println("Integer")
+        is Char -> println("Character")
+        is Boolean-> println("Boolean")
+        is String -> println("String")
+    }
+
+
+
+    // Task 5 . -- Gives error that two variables are not having the same name
+
+    var sm: Int=1
+    var sm: String="Wasim"
+
+    //Task 6 --  Reserved Keywords are not used as a variables.
+    var for: Int=1
+
+    println("\nTASK 5")
+    println("-------------\n")
+
+
+}
