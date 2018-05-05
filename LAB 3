@@ -58,8 +58,14 @@ fun main(args: Array<String>) {
 
     if (a%2==0) print("Even") else println("Odd")
     
+    println("---TASK 6 STARS---")
     
+    var n : Int
+    n=readLine()!!.toInt()
 
-}
-
-
+    for (i in 1..n){
+        print ("\n")
+        for(j in 1..i)
+        print("* ")
+    }
+ }
