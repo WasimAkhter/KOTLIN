@@ -50,7 +50,15 @@ fun main(args: Array<String>) {
 
     }
 
+    println("Task 5 check EVEN / ODD ")
 
+    var a: Int
+    println("Enter Number to check:")
+    a=readLine()!!.toInt()
+
+    if (a%2==0) print("Even") else println("Odd")
+    
+    
 
 }
 
