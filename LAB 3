@@ -1,0 +1,57 @@
+
+
+
+
+fun main(args: Array<String>) {
+
+    var a1=5
+    var b1=10
+    println("Task 1 : ${a1+b1}")
+
+    var sa2: String="2"
+    var sb2: String="3"
+    println("Task 2 : ${sa2 + sb2}")
+
+
+    var sa3: String="2"
+    var sb3: Int=3
+    println("Task 3 : ${sa3.toInt() + sb3}")
+
+
+    var choice=0
+    var val1=0
+    var val2=0
+    var op: String
+    var res: String
+
+    println(" -- TASK 4 --")
+
+    while (choice==0){
+        println("Enter Number 1: ")
+        val1=readLine()!!.toInt()
+
+        println("Enter Operator: ")
+        op=readLine()!!
+
+        println("Enter Number 2: ")
+        val2=readLine()!!.toInt()
+
+        if (val2<1 && op=="/") continue
+
+        when (op){
+            "+" -> print("${val1+val2}")
+            "-" -> print("${val1-val2}")
+            "/" -> print("${val1/val2}")
+            "*" -> print("${val1*val2}")
+        }
+
+        println ("\n\nWant to Continue press Y  to Exit Press N: ")
+        choice = if (readLine()=="Y") 0 else 1
+
+    }
+
+
+
+}
+
+
