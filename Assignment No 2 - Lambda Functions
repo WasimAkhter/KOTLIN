@@ -1,0 +1,36 @@
+fun main(arg: Array<String>) {
+
+    println("TASK 1: Create Lambda Function with no Argumnets and no return Type. ")
+    val L1 = { println("Task 1 : Completed") }
+    L1()
+
+    println("TASK 2: Create Lambda Function with no Argumnets and with Int return Type. ")
+    val L2: () -> Int = { println("Task 2 : Completed and retruns INT")
+        10 }
+    println(L2())
+
+    val L21: () -> Float = { println("Task 2 : Completed and retruns FLOAT")
+        10f }
+    println(L21())
+
+    val L22: () -> String = { println("Task 2 : Completed and retruns STRING")
+        "Wasim"
+    }
+    println(L22())
+
+    println("TASK 3: Create Lambda Function with Int Type Argumnets and no return Type ")
+    val L3: (Int) -> Unit = { println("Task 3 : Completed and Takes Argument INT : $it")  }
+    L3(20)
+
+    val L31: (Float) -> Unit = { println("Task 3 : Completed and Takes Argument Float : $it")  }
+    L31(20F)
+
+    val L32: (String) -> Unit = { println("Task 3 : Completed and Takes Argument String : $it")  }
+    L32("Wasim")
+
+    println("TASK 4: Create Lambda Function with 2 Int Type Argumnets and return sum of two Args. ")
+    val L4 : (Int,Int) -> Int ={ a,b -> println("Task 3 : Completed and Takes 2 Argument and returns their Sum:")
+        a+b  }
+    println(L4(20,10))
+}
+
