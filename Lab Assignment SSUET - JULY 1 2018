@@ -1,0 +1,84 @@
+import java.util.Arrays
+fun main(args : Array<String>) {
+
+
+    /* Task 1
+     1. Write a function that reverse a number
+     Example x = 32243;
+     Expected Output : 34223
+    */
+    task1()
+
+
+    /*2. Write a function that accepts two arguments, a string and a letter
+         and the function will count the number of occurrences of the
+         specified letter within the string. Go to the editor
+
+         Sample arguments : 'hello world', 'o'
+         Expected output : 2
+    */
+    println("\nTask 2")
+    println("Please Enter Strings and character to find:")
+    println(task2(readLine()!!,readLine()!!))
+
+
+    /*
+    3. Write a function to Revise String
+    Sample arguments : 'ishaq'
+    Expected output : 'qahsi'
+    */
+    task3()
+
+
+    /*
+    4. Write a function that joins the string array to a single string and return it.
+    Function has 2 arguments argument 1 is string and the 2nd is character to use
+    for separation but 2nd argument should be optional and if no 2nd argument passed, use ","
+    Sample arguments : arrayOf("I","s","h","a","q")
+    Expected Output : "I,s,h,a,q"
+    or
+    Sample arguments : arrayOf("I","s","h","a","q"),"-"
+    Expected Output : "I-s-h-a-q"
+   */
+
+    println("\nTask 4")
+    var arr = arrayOf("w","a","s","i","m")
+    println("Expected Output : " + task4(arr))
+    println("Expected Output : " + task4(arr,'-'))
+
+    /*
+    5. Write a program that accepts 2 arguments 1 is array of numbers and 2nd is a function.
+       This function will sum the numbers in array and instead of returning the result,
+       it will pass the total in the function passed in second parameter.
+     */
+
+    println("\nTask 5 \nArray: [1,2,3,4,5] ")
+    var arr2=arrayOf(1,2,3,4,5)
+    Task5(arr2,{ number -> println("number $number") })
+
+}
+
+
+
+
+fun task1()
+{
+    println ("TASK 1")
+    var x = 32243
+    println ("X = 32243")
+    println ("Expected Output: " + x.toString().reversed())
+}
+
+fun task2(str: String, ltr : String) = "Expected output : " + str.filter{it in ltr}.length
+fun task3()
+{
+    println("\nTask 3")
+    println("Write a function to Revise String [waseem]:")
+    var xn = "waseem"
+    var Rev =   xn.toString().reversed()
+    println ("Expected output : $Rev")
+
+}
+fun task4(arr: Array<String>, c : Char = ',' )= Arrays.toString(arr).replace(',',c).replace("[","").replace("]","")
+fun Task5(arr:Array<Int>, mF2 : (Int) -> Unit )= mF2(arr.sum())
+
