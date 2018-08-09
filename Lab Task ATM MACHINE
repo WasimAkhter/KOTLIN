@@ -1,0 +1,155 @@
+
+/*
+
+- 5 AUGUST 2018
+
+1. Create an ATM having a menu
+   1. Add Account
+   2. Login Account
+By selecting 1 Should present the Following console
+   Enter Account Name:
+   Enter Account Pin:
+   Enter Account Initial Deposit Amount:
+
+After entering it an account object should be added to accounts array list and you should return to main menu. By selecting Login account (2)
+  Enter Pain:
+Then it should present a Menu like this
+  1. For cash withdrawal
+  2. For Account Balance Inquiry
+  3. For Deposit
+  4. Logout
+
+By selecting 1 it should Ask you for Amount and then check if that amount is Withdrawable from your account and then minus that amount from account balance,otherwise show an error that not enough amount and return to main menu
+
+By selecting 2 you should just print the account balance remaining
+
+By Selecting 3 you should ask for amount and then add that amount to account
+
+By Selecting 4 you should Present the initial menu where you can login to another account.
+
+*/
+
+var ATMArray = arrayListOf<ATMClass_Accounts>()
+var loginIndex=0
+
+class ATMClass_Accounts (
+    val AccountName:String="" ,
+    val AccountPin:String="" ,
+    var IntialDeposit:Double=0.0) {
+
+
+    fun MainMenu() {
+        println("\nWelcome to the Kotlin Bank\n")
+        println("""
+        1. Add Account
+        2. Login Account
+        3. Exit
+    """.trimIndent())
+        when (readLine()!!.toInt()) {
+            1 -> addRecord()
+            2 -> Login()
+            3 -> System.exit(0)
+
+        }
+    }
+
+    fun subMenu() {
+        println("\nWelcome to the Accounts Panel")
+        println("""
+        1. For cash withdrawal
+        2. For Account Balance Inquiry
+        3. For Deposit
+        4. Logout
+     """.trimIndent())
+        when (readLine()!!.toInt()) {
+            1 -> withdrawl()
+            2 -> balance()
+            3 -> Deposit()
+            4 -> Logout()
+
+        }
+    }
+
+    fun addRecord() {
+        println("Enter Account Name: ")
+        var AcName = readLine()!!
+        println("Enter Account Pin: ")
+        var AcPin = readLine()!!
+        println("Enter Account IntialDeposit: ")
+        var AcID = readLine()!!.toDouble()
+        ATMArray.add(ATMClass_Accounts(AcName, AcPin, AcID))
+
+        MainMenu()
+    }
+
+    fun Login() {
+        println("\n")
+        println("Enter Account Name: ")
+        var AcName = readLine()!!
+        println("Enter Account Pin: ")
+        var AcPin = readLine()!!
+
+       if  (!verifyLogin(AcName+AcPin)) {
+           loginIndex = getLoginIndex(AcName+AcPin) // returns 1
+           println(loginIndex)
+           subMenu()
+       }
+       else {
+           println("Wrong Credentials")
+           MainMenu()
+       }
+    }
+
+    fun getLoginIndex(acN:String) : Int {
+        var indx1=0
+        for ((indx, AC) in ATMArray.withIndex()) if (AC.AccountName + AC.AccountPin== acN) {
+            indx1= indx
+        }
+       return indx1
+    }
+
+   fun verifyLogin(AcName: String) : Boolean {
+       return ATMArray.filter{it.AccountName + it.AccountPin==AcName}.isEmpty()
+   }
+
+
+    fun withdrawl() {
+        println("\nWelcome to the Withdrawl Panel\n")
+        println("Enter Amount to withdraw: ")
+        var amount=readLine()!!.toDouble()
+        if (ATMArray[loginIndex].IntialDeposit > amount)
+            ATMArray[loginIndex].IntialDeposit -= amount
+        else
+            println("Insufficient Balance")
+        subMenu()
+    }
+
+    fun balance() {
+        println("\nWelcome to the Balance Panel")
+
+        //for (i in 0..ATMArray.size - 1) {
+            println("Account Name: " + ATMArray[loginIndex].AccountName)
+            println("Account Pin: " + ATMArray[loginIndex].AccountPin)
+            println("Initial Deposit: " + ATMArray[loginIndex].IntialDeposit)
+       // }
+        subMenu()
+    }
+
+    fun Deposit() {
+        println("\nWelcome to the Deposit Panel\n")
+        println("Enter Amount to Deoposit: ")
+        var amount=readLine()!!.toDouble()
+        ATMArray[loginIndex].IntialDeposit += amount
+        subMenu()
+    }
+
+    fun Logout() {
+        MainMenu()
+    }
+}
+fun main(args: Array<String>) {
+    var obj = ATMClass_Accounts()
+    obj.MainMenu()
+}
+
+
