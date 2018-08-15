@@ -1,0 +1,174 @@
+import java.time.LocalDateTime
+
+/*
+1. Create an E-Commerce Program
+
+- Create a product containing
+
+ProductTitle,
+ProductPrice,
+Qty
+
+- Create a ShoppingCart ;
+- which can store array of products and calculate total, List Products and Apply a coupon code on All Products
+- Create a products List where user can select Products by their index
+  and you should ask the quantity they want to add in their cart..
+  But before adding it to cart, check it with product original qty so it can never be greater.
+
+It should continue after a every product is added and list the products again.
+
+- Implement the search which can product by name
+- Show cart in list and also show Grand Total with it
+- Place an order Using that Shopping cart class and create a random Order number
+- Store All Orders in a list and add option to view all placed orders with just their order Number and grand total.
+
+ */
+
+var productArray = arrayListOf<products>()
+var orderArray = arrayListOf<orders>()
+var userArray =arrayListOf<user>()
+var cartStatus=0
+
+class products(val productName: String="",val productPrice: Double=0.0,var ProductQty:Int=0){
+}
+class orders(var productName: String="",var productPrice: Double=0.0,var ProductQty:Int=0,
+             var userid: String="", var orderNo:String=""){}
+class user(val userName: String="wasim akhter",val ulogin: String="admin",val passwrd:String="abc"){
+}
+
+
+fun HeaderTemplate(){
+    println("\n********** ************ ***********\n")
+    println ("WELCOME TO THE SHOPPING CART\n")
+    println ("By Default UserID / Password for shopping: ${userArray[0].ulogin + " / " + userArray[0].passwrd }")
+    println ("Coupon Code for All Products : 101C02 10% discount \n\n")
+    showProducts()
+    MainMenu()
+
+}
+
+
+fun dataInitializer(){
+    //products
+    productArray.add(products("Apple i phone 8",121999.00,10))
+    productArray.add(products("Samsung S9 plus",104499.00,5))
+    productArray.add(products("Huawai P20 Pro",99999.00,10))
+
+    // User Login
+    userArray.add(user())
+}
+
+
+fun showProducts(){
+
+    for ((indx, productArray) in productArray.withIndex()){
+        println("Name: " + productArray.productName)
+        print("Price: " + productArray.productPrice)
+        println("\t Qty: " + productArray.ProductQty )
+        println("Enter to Select: " + indx +" \n\n")
+    }
+}
+
+fun addProductRecord(){
+    println("Enter Product Name: ")
+    var pdName = readLine()!!
+    println("Enter Product Price: ")
+    var pdPrice = readLine()!!.toDouble()
+    println("Enter Product QTY: ")
+    var pdQTY = readLine()!!.toInt()
+    productArray.add(products(pdName, pdPrice, pdQTY))
+    HeaderTemplate()
+}
+
+fun search_Product() {
+    println("\nSearch by Product Name (Pattern Matching)")
+    val sr = readLine()!!
+    for ((indx, productArray) in productArray.withIndex()){
+        if (sr in productArray.productName.toString().toLowerCase()) {
+            println("Name: " + productArray.productName)
+            print("Price: " + productArray.productPrice)
+            println("\t Qty: " + productArray.ProductQty )
+        }
+    }
+    println("\nPress any key to continue")
+    readLine()!!
+    HeaderTemplate()
+}
+
+
+
+fun MainMenu() {
+    cart_status()
+    println("""
+        1. Add Product
+        2. Search Product
+        3. Add to Cart
+        4. Order Status $cartStatus
+        5. Exit
+    """.trimIndent())
+    when (readLine()!!.toInt()) {
+        1 -> addProductRecord()
+        2 -> search_Product()
+        3 -> Add_to_Cart()
+        4 -> Check_Cart()
+        5 -> System.exit(0)
+    }
+}
+
+fun Add_to_Cart(){
+    var qty=0
+    var price=0.0
+    var orderNo= "ORD-" + LocalDateTime.now().dayOfMonth + LocalDateTime.now().year + LocalDateTime.now().second
+    + LocalDateTime.now().minute
+    print("Enter index No. to select product: ")
+    var sn = readLine()!!.toInt()
+
+    do{
+        print("Enter Quantity: ")
+        qty= readLine()!!.toInt()
+    }
+    while(productArray[sn].ProductQty < qty)
+
+    println ("Please Enter Coupon Code : 101C02  for 10% discount.")
+    var cp = readLine()!!
+
+    if (cp=="101C02") {
+        price = (productArray[sn].productPrice - (productArray[sn].productPrice * 0.1)) * qty
+    } else
+        price=productArray[sn].productPrice * qty
+
+    orderArray.add(orders(productArray[sn].productName,price,qty,
+            userArray[0].userName,orderNo))
+
+    update_product(sn,qty)
+    HeaderTemplate()
+
+}
+
+fun update_product(sn : Int,qty: Int){
+    productArray[sn].ProductQty -= qty
+}
+
+
+fun Check_Cart(){
+    var tp=0.0
+    print("\nShopping Cart: \n\n")
+    for ((indx, orderArray) in orderArray.withIndex()){
+        println("Order No.: " + orderArray.orderNo)
+        println("Name: " + orderArray.productName)
+        print("Price: " + orderArray.productPrice)
+        println("\t Qty: " + orderArray.ProductQty +"\n" )
+        tp += orderArray.productPrice
+    }
+    println("\nGrand Total: " + tp + "\n\n" )
+}
+
+fun cart_status(){
+    cartStatus= orderArray.size
+}
+
+
+fun main(args:Array<String>){
+    dataInitializer()
+    HeaderTemplate()
+}
