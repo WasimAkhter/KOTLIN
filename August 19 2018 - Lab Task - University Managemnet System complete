@@ -1,0 +1,339 @@
+import java.security.Key
+import javax.print.DocFlavor
+
+/*
+1. Create a University management System containing Following Entity Hierarchy.
+All Entities should print their objects directly by overriding toString and equals  methods.
+you can apply these logics without any UI, but having a main menu is plus point!
+
+Person
+- Name
+- Email
+- Phone
+
+Attendance
+- Date
+- isPresent
+
+Student inherits from Person
+- RollNo
+- MapOf Attendance
+
+
+Teacher
+- ArrayListOf Subjects (String)
+- StaffId
+- Salary
+
+University
+- Name
+- Address
+- email
+- website
+- ArrayListOf Teachers
+- ArrayListOf Students
+
+Funstionalities
+- getStudentByRollNo(rollNo) returns Student
+- getStudentByEmail(email) returns Student
+- getStudentAttendance(student) returns MapOf Attendance
+- getTeachersWhereSalaryIs(amount) returns ArrayListOf Teachers
+- getTeachersByStaffId(id) returns Teacher
+- getTeachersWhereSalaryIsGreater(amount) returns ArrayListOf Teachers
+- getTeachersWhereSalaryIsLessThan(amount) returns ArrayListOf Teachers
+- doesTeacherExists(teacher) returns Bool
+- doesStudentExists(student) returns Bool
+
+ */
+
+val Alist= mutableMapOf<String,Attendance>()
+val Sublist= arrayListOf<Subject>()
+var Slist=arrayListOf<student>()
+var Tlist=arrayListOf<teachers>()
+
+open class person (val Name: String,val Email: String, val Phone:String){}
+
+class Attendance (val Rollno: Int,val Dt: String, val isPresent: Boolean){}
+class Subject (val Subject: String,val staffID: Int){}
+
+class student (Name:String,Email:String,Phone:String,val RollNo: Int) : person(Name,Email,Phone){
+    init {
+        Alist[Name] = Attendance(RollNo,"08/24/2018" ,true)
+    }
+}
+class teachers (Name:String,Email:String,Phone:String,val staffID:Int,val salary: Int): person(Name,Email,Phone){
+    init {
+        Sublist.add(Subject("Kotlin",staffID))
+    }
+}
+
+class University(val Name: String,val Address:String, val Email:String,val website: String)
+{
+
+    init {
+
+        Slist.add(student("Wasim Akhter", "french.wasim@gmail.com", "03333333333", 121))
+        Slist.add(student("Ghufran Siddiqui", "ghufran.siddiqui@gmail.com", "03333333333", 122))
+
+        Tlist.add(teachers("Sir Ishaq","ishaq@gmail.com","03213213211",111,200000))
+        Tlist.add(teachers("Sir  Arbaz Pirwani","arbaz@gmail.com","03213213211",112,50000))
+    }
+
+
+    fun AddSubjects(){
+        println("\nADD SUBJECT\n\n")
+        println ("Enter StaffID: ")
+        var staffID= readLine()!!.toInt()
+        println ("Enter Subject: ")
+        Sublist.add(Subject(readLine()!!,staffID))
+    }
+
+    fun markAttendance()
+    {
+        println("\nADD ATTENDANCE\n\n")
+        println ("Enter Roll No: ")
+        var rollNo= readLine()!!.toInt()
+
+        println ("Enter Date: ")
+        var Dt= readLine()!!
+
+        println("Enter Status (true/false)")
+        var stat= readLine()!!.toBoolean()
+
+        Alist[Name] = Attendance(rollNo,Dt ,stat)
+    }
+
+    fun showData(){
+        println("\nALL STUDENTS RECORD:")
+        for ((indx, Slist) in Slist.withIndex()){
+            println("\nRoll No: " + Slist.RollNo)
+            println("Name: " + Slist.Name)
+            print("Email: " + Slist.Email)
+            println("\t Cell: " + Slist.Phone )
+            println("Attendance:")
+            for((key, value) in  Alist){
+                if (value.Rollno==Slist.RollNo)
+                    println("Date:" + value.Dt + " - " + if (value.isPresent) "Present" else "Absent" )
+            }
+        }
+        println("\n__________________________ \n\n")
+
+
+        println("\nALL TEACHERS RECORD:")
+        for ((indx, Tlist) in Tlist.withIndex()){
+            println("\nStaff ID: " + Tlist.staffID)
+            println("Name: " + Tlist.Name)
+            print("Email: " + Tlist.Email)
+            println("\t Cell: " + Tlist.Phone )
+            println("Subjects:")
+            for(value in  Sublist){
+                if (value.staffID== Tlist.staffID)
+                    println(value.Subject )
+            }
+        }
+        println("\n__________________________ \n\n")
+    }
+
+
+    fun getStudentByRollNo(v:Int): String{
+
+        var Res=""
+        for (i in Slist)
+            if (compares(v) == (i.RollNo as Any))
+            {
+                Res = "Found - " + i.Name
+                break
+            }
+            else
+                Res="Not Found"
+      return("Result:" + Res)
+
+    }
+
+    fun getStudentByEmail(v:String):String{
+
+        var Res=""
+        for (i in Slist)
+            if (compares(v) == (i.Email as Any))
+            {
+                Res = "Found - " + i.Name
+                break
+            }
+            else
+                Res="Not Found"
+       return("Result:" + Res)
+    }
+
+
+    fun getStudentAttendance(v: Int): String {
+
+        var Res=""
+        for ((i,value) in Alist)
+            if (compares(v) == (value.Rollno as Any))
+            {
+                Res = Res + "\nDate: " + value.Dt + " Status: " + if (value.isPresent) "Present" else "Absent"
+            }
+        return("Result:" + Res)
+    }
+
+    fun getTeacherBySalary(v:Int):String{
+
+        var Res=""
+        for (i in Tlist)
+            if (compares(v) == (i.salary as Any))
+            {
+                Res = "Found - " + i.Name
+                break
+            }
+            else
+                Res="Not Found"
+        return("Result:" + Res)
+    }
+
+
+    fun getTeachersByStaffId(v:Int): String{
+
+        var Res=""
+        for (i in Tlist)
+            if (compares(v) == (i.staffID as Any))
+            {
+                Res = "Found - " + i.Name
+                break
+            }
+            else
+                Res="Not Found"
+        return("Result:" + Res)
+
+    }
+
+
+    fun getTeachersWhereSalaryIsGreater(v:Int): String
+    {
+        var Res=""
+        for (i in Tlist)
+            if ( i.salary > v)
+            {
+                Res = Res +  "Found - " + i.Name + " - " + i.salary
+                break
+            }
+        return("Result:" + Res)
+    }
+
+    fun getTeachersWhereSalaryIsLess(v:Int): String
+    {
+        var Res=""
+        for (i in Tlist)
+            if ( i.salary < v)
+            {
+                Res = Res +  "Found - " + i.Name + " - " + i.salary
+                break
+            }
+        return("Result:" + Res)
+    }
+
+    fun doesTeacherExist(vx:String): Boolean {
+        var bl=false
+        for (t in Tlist){
+            if (vx in t.Name.toLowerCase()){
+              bl=true
+            }
+        }
+      return bl
+    }
+
+    fun doesStudentExist(vx:String): Boolean {
+        var bl=false
+        for (t in Slist){
+            if (vx in t.Name.toLowerCase()){
+                bl=true
+            }
+        }
+        return bl
+    }
+
+}
+
+
+class compares(var x:Any) {
+    override fun equals(other: Any?): Boolean {
+        return other == x
+    }
+}
+
+fun Main_UI(){
+     showOptions(University("ABC UNIVERSITY","ABC Street XYZ Road Karach Pakistan","info@abcuniversity.edu.pk",
+            "www.abcuniversity.edu.pk"))
+}
+
+fun showOptions(uni:University){
+
+    println("\n\t\t\t\t\t***************************")
+    println ("\t\t\t\t\t WELCOME TO ${uni.Name}")
+    println ("\t\t\tAddress: ${uni.Address}")
+    println ("\tEmail: ${uni.Email} \tWeb: ${uni.website}")
+    println ("\t__________________________________________________________________\n")
+
+    println("""
+        1. Search Student by Roll No.
+        2. Search Student by Email
+        3. Get Attendance of Student by Student
+        4. Find teacher Salary by Amount
+        5. Search Teacher by Staff ID
+        6. Search Teachers by Salary >
+        7. Search Teachers by Salary >
+        8. Check Teacher Exists by Teacher
+        9. Check Student Exists by Student
+        10. Mark Attendance of Student
+        11. Add Subject to Teachers
+        12. Show All Data
+        13. Exit
+    """.trimIndent())
+    when (readLine()!!.toInt()) {
+        1 -> {
+                println("Enter Roll No. to Search : ")
+                println(uni.getStudentByRollNo(readLine()!!.toInt()))
+            }
+        2 -> {
+            println("Enter Email ID to Search : ")
+            println(uni.getStudentByEmail(readLine()!!))
+        }
+        3 -> {
+            println("Enter Roll No. to Search : " )
+            println(uni.getStudentAttendance(readLine()!!.toInt()))
+        }
+        4 -> {
+            println("Enter Salary Amount to Search Teacher:")
+            println(uni.getTeacherBySalary(readLine()!!.toInt()))
+        }
+        5 -> {
+            println("Enter Staff ID to search: ")
+            println(uni.getTeachersByStaffId(readLine()!!.toInt()))
+        }
+        6 -> {
+            println("Enter Salary (List of Teacher) > ")
+            println(uni.getTeachersWhereSalaryIsGreater(readLine()!!.toInt()))
+        }
+        7 -> {
+            println("Enter Salary (List of Teacher) < ")
+            println(uni.getTeachersWhereSalaryIsLess(readLine()!!.toInt()))
+        }
+        8 -> {
+            println("Check Teacher Exists - Enter Name: - (Pattern Matching)")
+            println(if (uni.doesTeacherExist(readLine()!!)) "Exist" else "Not Exist")
+        }
+        9 -> {
+            println("Check Student Exists - Enter Name: - (Pattern Matching)")
+            println(if (uni.doesStudentExist(readLine()!!)) "Exist" else "Not Exist")
+        }
+        10 -> uni.markAttendance()
+        11 -> uni.AddSubjects()
+        12 -> uni.showData()
+        13 -> System.exit(0)
+    }
+
+    showOptions(uni)
+}
+
+fun main(args:Array<String>){
+    Main_UI()
+}
